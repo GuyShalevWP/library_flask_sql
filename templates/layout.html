@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='style.css') }}"
+        />
+        <title>Library - {% block title %}{% endblock %}</title>
+        {% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <div>
+            <a href="{{ url_for('home_page') }}">Home</a>
+            <a href="{{ url_for('books') }}">Books list</a>
+            <a href="{{ url_for('list_customers') }}">Customers</a>
+            <a href="{{ url_for('list_loans') }}">Borrow a book</a>
+        </div>
+        <div id="content">{% block content %}{% endblock %}</div>
+        <div id="footer">
+            {% block footer %} &copy; Copyright 2024 by
+            <a href="http://domain.invalid/">Guy</a>. {% endblock %}
+        </div>
+    </body>
+</html>

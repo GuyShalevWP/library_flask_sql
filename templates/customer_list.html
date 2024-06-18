@@ -1,0 +1,68 @@
+{% extends "layout.html" %} {% block title %}Customers list{% endblock %} {%
+block head %} {{ super() }}
+<style type="text/css">
+    .important {
+        color: #336699;
+    }
+</style>
+<script src="{{ url_for('static', filename='customerApi.js') }}"></script>
+{% endblock %} {% block content %}
+<h1>Customers List</h1>
+
+<!-- CRUD - Create -->
+<form action="/customers" method="post">
+    <label for="name">Customer name:</label><br />
+    <input type="text" name="name" id="name" required /><br />
+    <label for="city">City:</label><br />
+    <input type="text" name="city" id="city" required /><br />
+    <label for="age">Age:</label><br />
+    <input type="number" name="age" id="age" required /><br />
+    <input type="submit" value="Submit" />
+</form>
+
+<!-- CRUD - Read display all customers -->
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data %}
+        <tr>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>
+                <button onclick="delCustomer(`{{ item[0] }}`)">Delete</button>
+                <button
+                    data-id="{{ item[0] }}"
+                    data-name="{{ item[1] }}"
+                    data-city="{{ item[2] }}"
+                    data-age="{{ item[3] }}"
+                    onclick="showUpdateForm(this)"
+                >
+                    Update
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div id="updateForm" style="display: none">
+    <h2>Update Customer</h2>
+    <input type="hidden" id="updateId" />
+    <label for="updateName">Name:</label>
+    <input type="text" id="updateName" />
+    <label for="updateCity">City:</label>
+    <input type="text" id="updateCity" />
+    <label for="updateAge">Age:</label>
+    <input type="number" id="updateAge" />
+    <button onclick="updCustomer()">Update</button>
+</div>
+
+{% endblock %}
